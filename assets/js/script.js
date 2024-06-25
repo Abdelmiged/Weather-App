@@ -22,13 +22,17 @@ weatherFormButton.addEventListener("click", function(e) {
 });
 
 async function getLocation() {
-    let response = await fetch("http://ip-api.com/json/");
+    // let response = await fetch("http://ip-api.com/json/");
+
+    // Used another api due to mixed content conflict between HTTPS and HTTP
+    // Can't be used locally with live server due to mixed content
+    let response = await fetch("https://api.ipgeolocation.io/ipgeo?apiKey=3205e55a59da4835acffc47a8668be85");
     let data = await response.json();
     return data;
 }
 
 async function getForecast(query) {
-    let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=a1c79179c49e48a8bbb74438242406&q=${query}&days=${3}`);
+    let response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=a1c79179c49e48a8bbb74438242406&q=${query}&days=${3}`);
     let data = await response.json();
     return data;
 }
@@ -92,3 +96,11 @@ function displayThirdDay(thirdDay, forecastData) {
     thirdDay.querySelector(".smaller-value").textContent = forecastData.forecast.forecastday[2].day.mintemp_c + "°C";
     thirdDay.querySelector(".custom").textContent = forecastData.forecast.forecastday[2].day.condition.text;
 }
+
+// async function ip() {
+//     let response = await fetch("https://api.ipgeolocation.io/ipgeo?apiKey=3205e55a59da4835acffc47a8668be85");
+//     let data = await response.json();
+//     console.log(data);
+// }
+
+// ip();
